@@ -1,0 +1,8 @@
+
+{
+  "name": "GrocyWise - Local Grocery Finder",
+  "description": "Find the most affordable produce and best value supermarkets in your city using real-time search data.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

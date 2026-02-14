@@ -1,41 +1,22 @@
-  {
-    "name": "cuisinet",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-      "@testing-library/dom": "^10.4.1",
-      "@testing-library/jest-dom": "^6.9.1",
-      "@testing-library/react": "^16.3.2",
-      "@testing-library/user-event": "^13.5.0",
-      "dotenv": "^17.3.1",
-      "gh-pages": "^6.3.0",
-      "react": "^19.2.4",
-      "react-dom": "^19.2.4",
-      "react-scripts": "5.0.1",
-      "web-vitals": "^2.1.4"
-    },
-    "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "react-scripts test",
-      "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-      "extends": [
-        "react-app",
-        "react-app/jest"
-      ]
-    },
-    "browserslist": {
-      "production": [
-        ">0.2%",
-        "not dead",
-        "not op_mini all"
-      ],
-      "development": [
-        "last 1 chrome version",
-        "last 1 firefox version",
-        "last 1 safari version"
-      ]
-    }
+{
+  "name": "grocywise---local-grocery-finder",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react-dom": "^19.2.4",
+    "react": "^19.2.4",
+    "@google/genai": "^1.41.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
   }
+}
