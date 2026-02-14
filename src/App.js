@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
+import {key as testKey} from './key.json';
+
 function App() {
   return (
     <div className="App">
