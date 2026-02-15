@@ -3,10 +3,18 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { SearchResult, GroundingSource } from "../types";
 import { SYSTEM_INSTRUCTION } from "../constants";
 
-export const fetchGroceryData = async (city: string, country: string): Promise<SearchResult> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// import dotenv from 'dotenv'
+
+export const fetchGroceryData = async (city: string, country: string, shoppingList?: string): Promise<SearchResult> => {
+  console.log(process.env.GEMINI_API_KEY)
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
   
-  const prompt = `What are the most affordable produce items and major grocery stores in ${city}, ${country} right now? Analyze recent price trends and availability. Provide a mix of large chains and popular local discount options.`;
+  let prompt = `What are the most affordable produce items and major grocery stores in ${city}, ${country} right now? Analyze recent price trends and availability. Provide a mix of large chains and popular local discount options.`;
+
+  if (shoppingList) {
+    prompt += `\n\nAdditionally, the user wants to compare total costs for this specific shopping list: "${shoppingList}". 
+    Find the approximate prices for these items at the top 2-3 most relevant supermarkets in ${city} and calculate a total shopping cart cost for each.`;
+  }
 
   try {
     const response = await ai.models.generateContent({
@@ -22,13 +30,10 @@ export const fetchGroceryData = async (city: string, country: string): Promise<S
     const text = response.text || "{}";
     const data = JSON.parse(text);
 
-    // Extract grounding sources
-    const sources: GroundingSource[] = [];
     const metadata = response.candidates?.[0]?.groundingMetadata;
-    const chunks = metadata?.groundingChunks;
-    
-    if (chunks) {
-      chunks.forEach((chunk: any) => {
+    const sources: GroundingSource[] = [];
+    if (metadata?.groundingChunks) {
+      metadata.groundingChunks.forEach((chunk: any) => {
         if (chunk.web && chunk.web.uri) {
           sources.push({
             title: chunk.web.title || "Search Reference",
@@ -38,7 +43,6 @@ export const fetchGroceryData = async (city: string, country: string): Promise<S
       });
     }
 
-    // Extract search entry point for Google Grounding UI
     const searchEntryPoint = metadata?.searchEntryPoint?.renderedContent;
 
     return {

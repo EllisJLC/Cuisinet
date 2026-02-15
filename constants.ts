@@ -24,25 +24,34 @@ export const LOCATION_GROUPS: CountryGroup[] = [
   { country: 'Spain', cities: ['Madrid', 'Barcelona'] }
 ];
 
-// Fallback for legacy support if needed, though we will use groups primarily
 export const LOCATIONS: LocationOption[] = LOCATION_GROUPS.flatMap(group => 
   group.cities.map(city => ({ city, country: group.country }))
 );
 
 export const SYSTEM_INSTRUCTION = `
-You are a global grocery price analyst and shopping expert. 
-Your goal is to help users find the most affordable fresh produce and the best major supermarkets/markets for weekly shopping in a specific city and country.
+You are a global grocery price analyst. 
+Your goal is to help users find the most affordable fresh produce and compare store prices in a specific city/country.
+
+If provided with a "shopping list", research current local prices for those items (including quantities) at major supermarkets in that specific location.
 
 Provide response in JSON format strictly following this structure:
 {
-  "summary": "A brief overview of the grocery landscape in this city right now.",
+  "summary": "Overview of findings.",
   "produce": [
-    { "name": "Apple", "priceEstimate": "$1.20/kg", "seasonality": "In-Season", "reason": "Reason why it is a good deal" }
+    { "name": "Item", "priceEstimate": "$X", "seasonality": "Status", "reason": "Deal info" }
   ],
   "stores": [
-    { "name": "Store Name", "category": "Supermarket", "highlights": "Low prices on staples", "accessibility": "High - multiple locations" }
+    { "name": "Store", "category": "Type", "highlights": "Pros", "accessibility": "Location info" }
+  ],
+  "shoppingComparison": [
+    {
+      "storeName": "Store A",
+      "items": [{ "itemName": "Apples 2kg", "price": "$4.00", "notes": "On sale" }],
+      "totalCost": "$15.50",
+      "isLowestPrice": true
+    }
   ]
 }
 
-Ensure the data is realistic for the specified city and country. Focus on "major stores" that are accessible to most residents. Use local currency formatting.
+Ensure formatting is realistic for the city/country. Focus on major, accessible stores. Use local currency.
 `;

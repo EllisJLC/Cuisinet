@@ -18,12 +18,26 @@ export interface GroundingSource {
   uri: string;
 }
 
+export interface ShoppingItemCost {
+  itemName: string;
+  price: string;
+  notes: string;
+}
+
+export interface StoreShoppingComparison {
+  storeName: string;
+  items: ShoppingItemCost[];
+  totalCost: string;
+  isLowestPrice: boolean;
+}
+
 export interface SearchResult {
   produce: ProduceItem[];
   stores: Store[];
   summary: string;
   sources: GroundingSource[];
   searchEntryPoint?: string;
+  shoppingComparison?: StoreShoppingComparison[];
 }
 
 export interface LocationOption {
