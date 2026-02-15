@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Layout } from './components/Layout';
-import { LOCATION_GROUPS, FOOD_GROUPS, DIETARY_RESTRICTIONS } from './constants';
+import { LOCATION_GROUPS, FOOD_GROUPS, DIETARY_RESTRICTIONS, CUISINES } from './constants';
 import { SearchResult } from './types';
 import { fetchGroceryData } from './services/geminiService';
 
@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<string>(LOCATION_GROUPS[0].cities[0]);
   const [selectedFoodGroups, setSelectedFoodGroups] = useState<string[]>([]);
   const [selectedDietary, setSelectedDietary] = useState<string[]>([]);
+  const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
   const [shoppingList, setShoppingList] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<SearchResult | null>(null);
@@ -28,19 +29,11 @@ const App: React.FC = () => {
     }
   };
 
-  const toggleFoodGroup = (group: string) => {
-    setSelectedFoodGroups(prev => 
-      prev.includes(group) 
-        ? prev.filter(g => g !== group) 
-        : [...prev, group]
-    );
-  };
-
-  const toggleDietary = (restriction: string) => {
-    setSelectedDietary(prev => 
-      prev.includes(restriction) 
-        ? prev.filter(r => r !== restriction) 
-        : [...prev, restriction]
+  const toggleFilter = (item: string, state: string[], setter: React.Dispatch<React.SetStateAction<string[]>>) => {
+    setter(prev => 
+      prev.includes(item) 
+        ? prev.filter(i => i !== item) 
+        : [...prev, item]
     );
   };
 
@@ -53,7 +46,8 @@ const App: React.FC = () => {
         selectedCountry, 
         shoppingList, 
         selectedFoodGroups,
-        selectedDietary
+        selectedDietary,
+        selectedCuisines
       );
       setResults(data);
     } catch (err: any) {
@@ -115,49 +109,63 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* Food Group Selection */}
-              <div className="space-y-3">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Target Food Groups</label>
-                <div className="flex flex-wrap gap-2">
-                  {FOOD_GROUPS.map((group) => {
-                    const isActive = selectedFoodGroups.includes(group);
-                    return (
+              {/* Multi-Select Filters */}
+              <div className="space-y-5">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Food Groups</label>
+                  <div className="flex flex-wrap gap-2">
+                    {FOOD_GROUPS.map((group) => (
                       <button
                         key={group}
-                        onClick={() => toggleFoodGroup(group)}
+                        onClick={() => toggleFilter(group, selectedFoodGroups, setSelectedFoodGroups)}
                         className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                          isActive 
+                          selectedFoodGroups.includes(group) 
                             ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-100' 
                             : 'bg-white border-slate-100 text-slate-500 hover:border-emerald-200 hover:bg-emerald-50'
                         }`}
                       >
                         {group}
                       </button>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Dietary Restriction Selection */}
-              <div className="space-y-3">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Dietary Preferences</label>
-                <div className="flex flex-wrap gap-2">
-                  {DIETARY_RESTRICTIONS.map((restriction) => {
-                    const isActive = selectedDietary.includes(restriction);
-                    return (
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Dietary Needs</label>
+                  <div className="flex flex-wrap gap-2">
+                    {DIETARY_RESTRICTIONS.map((res) => (
                       <button
-                        key={restriction}
-                        onClick={() => toggleDietary(restriction)}
+                        key={res}
+                        onClick={() => toggleFilter(res, selectedDietary, setSelectedDietary)}
                         className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                          isActive 
+                          selectedDietary.includes(res) 
                             ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-100' 
                             : 'bg-white border-slate-100 text-slate-500 hover:border-blue-200 hover:bg-blue-50'
                         }`}
                       >
-                        {restriction}
+                        {res}
                       </button>
-                    );
-                  })}
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Staple Cuisines</label>
+                  <div className="flex flex-wrap gap-2">
+                    {CUISINES.map((cuisine) => (
+                      <button
+                        key={cuisine}
+                        onClick={() => toggleFilter(cuisine, selectedCuisines, setSelectedCuisines)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                          selectedCuisines.includes(cuisine) 
+                            ? 'bg-orange-600 border-orange-600 text-white shadow-lg shadow-orange-100' 
+                            : 'bg-white border-slate-100 text-slate-500 hover:border-orange-200 hover:bg-orange-50'
+                        }`}
+                      >
+                        {cuisine}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 

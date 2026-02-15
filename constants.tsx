@@ -41,6 +41,17 @@ export const DIETARY_RESTRICTIONS = [
   'Low Carb'
 ];
 
+export const CUISINES = [
+  'South-East Asian',
+  'East Asian',
+  'South Asian',
+  'Mediterranean',
+  'Latin American',
+  'Middle Eastern',
+  'African',
+  'Caribbean'
+];
+
 export const SYSTEM_INSTRUCTION = `
 You are a world-class global grocery price analyst. 
 Your goal is to help users find the most affordable items and compare store prices in a specific city/country.

@@ -8,7 +8,8 @@ export const fetchGroceryData = async (
   country: string, 
   shoppingList?: string,
   foodGroups: string[] = [],
-  dietaryRestrictions: string[] = []
+  dietaryRestrictions: string[] = [],
+  cuisines: string[] = []
 ): Promise<SearchResult> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   
@@ -20,16 +21,21 @@ export const fetchGroceryData = async (
     ? `IMPORTANT: All recommendations must strictly adhere to these dietary restrictions: ${dietaryRestrictions.join(', ')}.`
     : '';
 
+  const cuisinesText = cuisines.length > 0
+    ? `Suggest staple items and deals relevant to these cuisines/cultures: ${cuisines.join(', ')} (e.g., if South-East Asian is selected, check for deals on rice, soy sauce, etc.).`
+    : '';
+
   let prompt = `Analyze grocery prices and store availability in ${city}, ${country} right now. 
   ${groupsText}
   ${dietaryText}
-  Identify the 4 best deals or most affordable seasonal items available today that fit these criteria. 
+  ${cuisinesText}
+  Identify the 4 best deals or most affordable seasonal/staple items available today that fit these criteria. 
   What are the 3 best value grocery stores in this city for these types of items?`;
 
   if (shoppingList) {
     prompt += `\n\nCRITICAL: The user has a shopping list: "${shoppingList}". 
     Find approximate current prices for these specific items at the top 3 supermarkets in ${city}. 
-    Ensure items found match the dietary needs if specified (${dietaryRestrictions.join(', ') || 'None'}).
+    Ensure items found match the dietary needs (${dietaryRestrictions.join(', ') || 'None'}) and cuisine preferences (${cuisines.join(', ') || 'None'}).
     Calculate the total estimated cost for the list at each store. 
     Identify which store offers the best total value.`;
   }
