@@ -5,7 +5,7 @@ import { CountryGroup } from './types';
 export const LOCATION_GROUPS: CountryGroup[] = [
   { country: 'United Kingdom', cities: ['London', 'Manchester', 'Birmingham', 'Edinburgh'] },
   { country: 'USA', cities: ['New York', 'San Francisco', 'Chicago', 'Los Angeles', 'Austin', 'Seattle'] },
-  { country: 'Canada', cities: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa'] },
+  { country: 'Canada', cities: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa', 'Calgary', 'Mississauga', 'Markham', 'Scarborough', 'Oakville'] },
   { country: 'Australia', cities: ['Sydney', 'Melbourne', 'Brisbane', 'Perth'] },
   { country: 'Germany', cities: ['Berlin', 'Munich', 'Hamburg', 'Frankfurt'] },
   { country: 'France', cities: ['Paris', 'Lyon', 'Marseille'] },
@@ -17,7 +17,9 @@ export const LOCATION_GROUPS: CountryGroup[] = [
   { country: 'South Africa', cities: ['Cape Town', 'Johannesburg'] },
   { country: 'Mexico', cities: ['Mexico City', 'Guadalajara'] },
   { country: 'Italy', cities: ['Rome', 'Milan', 'Florence'] },
-  { country: 'Spain', cities: ['Madrid', 'Barcelona'] }
+  { country: 'Spain', cities: ['Madrid', 'Barcelona'] },
+  { country: 'South Korea', cities: ['Seoul', 'Busan'] }
+
 ];
 
 export const FOOD_GROUPS = [

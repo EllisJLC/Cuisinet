@@ -1,5 +1,5 @@
 {
-  "name": "GrocyWise AI",
+  "name": "CuisiNet AI",
   "description": "A real-time grocery price analyzer and shopping list optimizer powered by Gemini AI with Search Grounding.",
   "requestFramePermissions": [
     "geolocation"
