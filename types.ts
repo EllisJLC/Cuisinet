@@ -29,6 +29,7 @@ export interface StoreShoppingComparison {
   items: ShoppingItemCost[];
   totalCost: string;
   isLowestPrice: boolean;
+  totalNumeric?: number;
 }
 
 export interface SearchResult {
@@ -38,6 +39,11 @@ export interface SearchResult {
   sources: GroundingSource[];
   searchEntryPoint?: string;
   shoppingComparison?: StoreShoppingComparison[];
+}
+
+export interface CountryGroup {
+  country: string;
+  cities: string[];
 }
 
 export interface LocationOption {

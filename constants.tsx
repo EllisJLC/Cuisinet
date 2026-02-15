@@ -1,10 +1,6 @@
 
-import { LocationOption } from './types';
-
-export interface CountryGroup {
-  country: string;
-  cities: string[];
-}
+import React from 'react';
+import { CountryGroup } from './types';
 
 export const LOCATION_GROUPS: CountryGroup[] = [
   { country: 'United Kingdom', cities: ['London', 'Manchester', 'Birmingham', 'Edinburgh'] },
@@ -24,15 +20,32 @@ export const LOCATION_GROUPS: CountryGroup[] = [
   { country: 'Spain', cities: ['Madrid', 'Barcelona'] }
 ];
 
-export const LOCATIONS: LocationOption[] = LOCATION_GROUPS.flatMap(group => 
-  group.cities.map(city => ({ city, country: group.country }))
-);
+export const FOOD_GROUPS = [
+  'Fruits & Veg',
+  'Dairy & Eggs',
+  'Meat & Seafood',
+  'Pantry Staples',
+  'Bakery',
+  'Snacks & Drinks',
+  'Frozen Food'
+];
+
+export const DIETARY_RESTRICTIONS = [
+  'Vegan',
+  'Vegetarian',
+  'Gluten-Free',
+  'Dairy-Free',
+  'Halal',
+  'Kosher',
+  'Nut-Free',
+  'Low Carb'
+];
 
 export const SYSTEM_INSTRUCTION = `
-You are a global grocery price analyst. 
-Your goal is to help users find the most affordable fresh produce and compare store prices in a specific city/country.
+You are a world-class global grocery price analyst. 
+Your goal is to help users find the most affordable items and compare store prices in a specific city/country.
 
-If provided with a "shopping list", research current local prices for those items (including quantities) at major supermarkets in that specific location.
+If provided with a "shopping list", research current local prices for those items (including quantities) at major supermarkets in that specific location. Use web search grounding to get real-time price approximations.
 
 Provide response in JSON format strictly following this structure:
 {

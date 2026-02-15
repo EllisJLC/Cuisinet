@@ -1,7 +1,6 @@
-
 {
-  "name": "GrocyWise - Local Grocery Finder",
-  "description": "Find the most affordable produce and best value supermarkets in your city using real-time search data.",
+  "name": "GrocyWise AI",
+  "description": "A real-time grocery price analyzer and shopping list optimizer powered by Gemini AI with Search Grounding.",
   "requestFramePermissions": [
     "geolocation"
   ]
